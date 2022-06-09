@@ -7,21 +7,19 @@ import org.springframework.stereotype.*;
 import java.util.*;
 
 @Service
-public class UserService  {
+public class UserService {
 
 
     @Autowired
-    private UserRepository  userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
 
 
-    public List<User> listAll(){
+    public List<User> listAll() {
         return (List<User>) userRepository.findAll();
     }
-
-
 
 
     public List<Role> listRoles() {
@@ -31,5 +29,14 @@ public class UserService  {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+
+    public boolean isEmailUnique(String email) {
+
+        User user = userRepository.getUserByEmail(email);
+
+        return user == null;
+
     }
 }
