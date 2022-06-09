@@ -73,8 +73,9 @@
     <div>
         <form th:action="@{/users/save}"
               method="post"
-              style="max-width: 700px; margin: 0 auto" th:object="${user}" enctype="multipart/form-data">
-            <!--              onsubmit="return checkEmailUnique(this);"-->
+              style="max-width: 700px; margin: 0 auto" th:object="${user}" onsubmit="return checkEmailUnique(this);"
+              enctype="multipart/form-data">
+
 
             <input type="hidden" th:field="*{id}"/>
             <div class="border border-secondary rounded p-3">
@@ -147,7 +148,7 @@
                 <div class="text-center">
                     <input type="submit" th:value="Save" class="btn btn-primary m-3"/>
                     <input
-                            type="button"  id="buttonCancel" th:value="Cancel" class="btn btn-secondary"/>
+                            type="button" id="buttonCancel" th:value="Cancel" class="btn btn-secondary"/>
 
                 </div>
 
@@ -159,17 +160,34 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function(){
-        $("#buttonCancel").on( "click" , function(){
+    $(document).ready(function () {
+        $("#buttonCancel").on("click", function () {
             window.location = "[[@{/users}]]";
         });
     })
+
+    function checkEmailUnique(form) {
+        var email = form.email.value;
+        var id = form.id.value;
+        var url = "http://localhost:8080/users/checkEmailUnique?email=" + email + "&id=" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                if (data == "false") {
+                    alert("Email is already in use");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        });
+    }
 
 </script>
 
 
 </body>
-
 
 
 </html>
