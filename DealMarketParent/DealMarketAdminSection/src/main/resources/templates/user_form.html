@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>Create New User</title>
+    <title>[[${pageTitle}]]</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.6.1/dist/css/bootstrap.min.css}">
     <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/dist/jquery.min.js}"></script>
@@ -77,7 +77,7 @@
               enctype="multipart/form-data">
 
 
-            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{id}" />
             <div class="border border-secondary rounded p-3">
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Email</label>
@@ -167,21 +167,29 @@
     })
 
     function checkEmailUnique(form) {
-        var email = form.email.value;
-        var id = form.id.value;
-        var url = "http://localhost:8080/users/checkEmailUnique?email=" + email + "&id=" + id;
-        $.ajax({
-            url: url,
-            type: "GET",
-            success: function (data) {
-                if (data == "false") {
-                    alert("Email is already in use");
-                    return false;
-                } else {
-                    return true;
-                }
+        url = "[[@{/users/check_email}]]";
+        userEmail = $("#email").val();
+        userId = $("#id").val();
+        csrfValue = $("input[name='_csrf']").val();
+
+        params = {id: userId, email: userEmail, _csrf: csrfValue};
+
+        $.post(url, params, function (response) {
+            if (response == "OK") {
+                form.submit();
+            } else if (response == "Duplicated") {
+                alert("Email is duplicated");
+                // showWarningModal("There is another user having the email " + userEmail);
+            } else {
+                alert("Unknown response from server");
+                // showErrorModal("Unknown response from server");
             }
+        }).fail(function () {
+            alert("Could not connect to the server");
+            // showErrorModal("Could not connect to the server");
         });
+
+        return false;
     }
 
 </script>

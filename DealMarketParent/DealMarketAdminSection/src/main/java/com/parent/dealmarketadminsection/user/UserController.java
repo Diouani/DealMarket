@@ -1,6 +1,7 @@
 package com.parent.dealmarketadminsection.user;
 
 
+import com.parent.dealmarketadminsection.exeptions.*;
 import com.root.dealmarketshared.entity.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -45,11 +46,30 @@ public class UserController {
 
 
     @PostMapping("/save")
-    public String saveUser(User user , RedirectAttributes redirectAttributes) {
-        System.out.println(user);
+    public String saveUser(User user, RedirectAttributes redirectAttributes) {
         userService.save(user);
-        redirectAttributes.addFlashAttribute("message" , "The User has been saved successfully.");
+        redirectAttributes.addFlashAttribute("message", "The User has been saved successfully.");
         return "redirect:/users";
+
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable(name = "id") Long id, RedirectAttributes redirectAttributes, Model model) {
+        List<Role> listRoles = userService.listRoles();
+        try {
+            User user = userService.get(id);
+            model.addAttribute("user", user);
+            model.addAttribute("pageTitle", "Edit User");
+            model.addAttribute("listRoles", listRoles);
+
+            return "user_form";
+        } catch (UserNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/users";
+        }
+
+
     }
 
 
