@@ -3,9 +3,12 @@
 <head>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>Home DealMarket Admin Control Panel</title>
+    <title>[[${pageTitle}]]</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.6.1/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawsome/all.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+
     <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/dist/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.1/dist/js/bootstrap.min.js}"></script>
 </head>
@@ -69,6 +72,10 @@
 
     </div>
 
+    <div th:if="${message !=null}"  class="alert alert-success text-center" >
+        [[${message}]]
+    </div>
+
 
     <div>
         <table class="table table-responsive-xl table-bordered table-striped table-hover">
@@ -94,16 +101,19 @@
             <tbody>
             <tr th:each="user: ${listUsers}">
                 <td>[[${user.id}]]</td>
-                <td><img th:src="@{/images/users/${user.photo}}" width="50" height="50"></td>
+                <td style="display: flex;justify-content: center"><span style="width: 100%" class="fas fa-portrait fa-3x icon-silver"></span></td>
                 <td>[[${user.email}]]</td>
                 <td>[[${user.firstName}]]</td>
                 <td>[[${user.lastName}]]</td>
                 <td>[[${user.roles}]]</td>
-                <td>[[${user.enabled}]]</td>
                 <td>
-                    <a class="btn btn-primary" th:href="@{/users/edit/${user.id}}">Edit</a>
+                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"></a>
+                <a th:if="${user.enabled == false}" class="fas fa-check-circle fa-2x icon-dark"></a>
+
+                <td>
+                    <a class="fas fa-edit fa-2x icon-green" th:href="@{/users/edit/{id}(id=${user.id})}"></a>
                     &nbsp;
-                    <a class="btn btn-danger" th:href="@{/users/delete/${user.id}}">Delete</a>
+                    <a class="fas fa-trash fa-2x icon-red link-delete" th:href="@{/users/delete/{id}(id=${user.id})}"></a>
 
                 </td>
             </tr>
@@ -111,6 +121,19 @@
         </table>
     </div>
 </div>
+
+<script type="text/javascript" >
+
+    $(document).ready(function(){
+        $(".link-delete").on("click", function(e){
+            e.preventDefault();
+        alert($(this).attr("href"));
+        });
+    });
+
+
+
+</script>
 
 </body>
 </html>

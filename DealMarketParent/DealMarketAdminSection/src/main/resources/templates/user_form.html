@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html" charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-    <title>Create New User</title>
+    <title>[[${pageTitle}]]</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.6.1/dist/css/bootstrap.min.css}">
     <script type="text/javascript" th:src="@{/webjars/jquery/3.6.0/dist/jquery.min.js}"></script>
@@ -73,21 +73,22 @@
     <div>
         <form th:action="@{/users/save}"
               method="post"
-              style="max-width: 700px; margin: 0 auto" th:object="${user}"
-              onsubmit="return checkEmailUnique(this);"
+              style="max-width: 700px; margin: 0 auto" th:object="${user}" onsubmit="return checkEmailUnique(this);"
               enctype="multipart/form-data">
-            <input type="hidden" th:field="*{id}"/>
+
+
+            <input type="hidden" th:field="*{id}" />
             <div class="border border-secondary rounded p-3">
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.email}]]</label>
+                    <label class="col-sm-4 col-form-label">Email</label>
                     <div class="col-sm-8">
-                        <input type="email" class="form-control" th:field="*{email}"
-                               required minlength="8" maxlength="128"/>
+                        <input class="form-control" maxlength="128" minlength="8"
+                               required th:field="*{email}" type="email"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.firstname}]]</label>
+                    <label class="col-sm-4 col-form-label">First Name</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" th:field="*{firstName}"
                                required minlength="2" maxlength="45"/>
@@ -95,7 +96,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.lastname}]]</label>
+                    <label class="col-sm-4 col-form-label">Last Name</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" th:field="*{lastName}"
                                required minlength="2" maxlength="45"/>
@@ -103,7 +104,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.password}]]</label>
+                    <label class="col-sm-4 col-form-label">Password</label>
                     <div class="col-sm-8">
                         <input th:if="${user.id == null}" type="password"
                                class="form-control" th:field="*{password}" required
@@ -115,7 +116,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.roles}]]</label>
+                    <label class="col-sm-4 col-form-label">Role</label>
                     <div class="col-sm-8">
                         <th:block th:each="role : ${listRoles}">
                             <input type="checkbox" th:field="*{roles}" th:text="${role.name}"
@@ -127,30 +128,74 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.enabled}]]</label>
+                    <label class="col-sm-4 col-form-label">Enabled</label>
                     <div class="col-sm-8">
                         <input type="checkbox" th:field="*{enabled}"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">[[#{user.form.photo}]]</label>
+                    <label class="col-sm-4 col-form-label">Photos</label>
                     <div class="col-sm-8">
                         <input type="hidden" th:field="*{photos}"/>
                         <input type="file" id="fileImage" name="image" accept="image/png, image/jpeg"
                                class="mb-2"/>
-                        <img id="thumbnail" alt="Photos preview" th:src="@{${user.photosImagePath}}"
-                             class="img-fluid"/>
+                        <!--                        <img id="thumbnail" alt="Photos preview" th:src="@{${user.photosImagePath}}"-->
+                        <!--                             class="img-fluid"/>-->
                     </div>
                 </div>
 
                 <div class="text-center">
-                    <input type="submit" th:value="#{user.form.savebutton}" class="btn btn-primary m-3"/>
+                    <input type="submit" th:value="Save" class="btn btn-primary m-3"/>
                     <input
-                            type="button" th:value="#{user.form.cancelbutton}" class="btn btn-secondary"
+                            type="button" id="buttonCancel" th:value="Cancel" class="btn btn-secondary"/>
 
                 </div>
+
+
             </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#buttonCancel").on("click", function () {
+            window.location = "[[@{/users}]]";
+        });
+    })
+
+    function checkEmailUnique(form) {
+        url = "[[@{/users/check_email}]]";
+        userEmail = $("#email").val();
+        userId = $("#id").val();
+        csrfValue = $("input[name='_csrf']").val();
+
+        params = {id: userId, email: userEmail, _csrf: csrfValue};
+
+        $.post(url, params, function (response) {
+            if (response == "OK") {
+                form.submit();
+            } else if (response == "Duplicated") {
+                alert("Email is duplicated");
+                // showWarningModal("There is another user having the email " + userEmail);
+            } else {
+                alert("Unknown response from server");
+                // showErrorModal("Unknown response from server");
+            }
+        }).fail(function () {
+            alert("Could not connect to the server");
+            // showErrorModal("Could not connect to the server");
+        });
+
+        return false;
+    }
+
+</script>
+
 
 </body>
+
+
 </html>

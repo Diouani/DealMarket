@@ -42,8 +42,8 @@ public class UserRepositoryTests {
     @Test
     void testCreateNewUserWithTwoRoles() {
         User userYasser = new User("yasser.jamaleddine@gmail.com", "yasser123", "Yasser", "JamalEddine");
-        Role roleEditor = new Role(1);
-        Role roleAssistant = new Role(2);
+        Role roleEditor = new Role(1L);
+        Role roleAssistant = new Role(2L);
         userYasser.addRole(roleEditor);
         userYasser.addRole(roleAssistant);
 
@@ -78,8 +78,8 @@ public class UserRepositoryTests {
     @Test
     void testUpdateUserRoles(){
         User userYasser = userRepository.findById(2L).get();
-        Role roleEditor = new Role(5);
-        Role roleSalesperson= new Role(3);
+        Role roleEditor = new Role(5L);
+        Role roleSalesperson= new Role(3L);
         userYasser.getRoles().remove(roleEditor);
         userYasser.addRole(roleSalesperson);
 
@@ -91,6 +91,16 @@ public class UserRepositoryTests {
     void testDeleteUser(){
         User userYasser = userRepository.findById(5L).get();
         userRepository.delete(userYasser);
+
+    }
+
+
+    @Test
+    void testGetUserByEmail(){
+        String email ="diouani.youssef@gmail.com";
+     User user =   userRepository.getUserByEmail(email);
+        assertThat(user).isNotNull();
+
 
     }
 

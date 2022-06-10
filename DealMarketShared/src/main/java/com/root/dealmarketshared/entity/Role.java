@@ -16,7 +16,7 @@ import java.util.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(length = 40 , nullable = false , unique = true)
     private String name;
     @Column(length = 150 , nullable = false)
@@ -45,7 +45,7 @@ public class Role {
         return Objects.hash(id);
     }
 
-    public Role(Integer id) {
+    public Role(Long id) {
         this.id = id;
     }
 }
