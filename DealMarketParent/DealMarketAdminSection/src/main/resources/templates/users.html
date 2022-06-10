@@ -72,7 +72,7 @@
 
     </div>
 
-    <div th:if="${message !=null}"  class="alert alert-success text-center" >
+    <div th:if="${message !=null}" class="alert alert-success text-center">
         [[${message}]]
     </div>
 
@@ -101,19 +101,25 @@
             <tbody>
             <tr th:each="user: ${listUsers}">
                 <td>[[${user.id}]]</td>
-                <td style="display: flex;justify-content: center"><span style="width: 100%" class="fas fa-portrait fa-3x icon-silver"></span></td>
+                <td style="display: flex;justify-content: center"><span style="width: 100%"
+                                                                        class="fas fa-portrait fa-3x icon-silver"></span>
+                </td>
                 <td>[[${user.email}]]</td>
                 <td>[[${user.firstName}]]</td>
                 <td>[[${user.lastName}]]</td>
                 <td>[[${user.roles}]]</td>
                 <td>
-                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"></a>
-                <a th:if="${user.enabled == false}" class="fas fa-check-circle fa-2x icon-dark"></a>
+                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+                       th:href="@{'/users/'+ ${user.id} + '/enabled/false'}" title="Disable this user"></a>
+                    <a th:if="${user.enabled == false}" class="fas fa-circle fa-2x icon-dark"
+                       th:href="@{'/users/'+ ${user.id} + '/enabled/true'}" title="enable this user"></a>
 
                 <td>
-                    <a class="fas fa-edit fa-2x icon-green" th:href="@{/users/edit/{id}(id=${user.id})}"></a>
-                    &nbsp;
-                    <a class="fas fa-trash fa-2x icon-red link-delete" th:href="@{/users/delete/{id}(id=${user.id})}"></a>
+                    <a class="fas fa-edit fa-2x icon-green" th:href="@{/users/edit/{id}(id=${user.id})}"
+                       title="Edit this user"></a>
+                    &nbsp;&nbsp;
+                    <a class="fas fa-trash fa-2x icon-red link-delete" th:href="@{/users/delete/{id}(id=${user.id})}"
+                       title="Delete this user"></a>
 
                 </td>
             </tr>
@@ -122,15 +128,14 @@
     </div>
 </div>
 
-<script type="text/javascript" >
+<script type="text/javascript">
 
-    $(document).ready(function(){
-        $(".link-delete").on("click", function(e){
+    $(document).ready(function () {
+        $(".link-delete").on("click", function (e) {
             e.preventDefault();
-        alert($(this).attr("href"));
+            alert($(this).attr("href"));
         });
     });
-
 
 
 </script>

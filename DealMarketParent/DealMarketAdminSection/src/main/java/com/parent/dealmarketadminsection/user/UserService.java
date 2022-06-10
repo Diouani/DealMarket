@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class UserService {
 
 
@@ -90,4 +92,8 @@ public class UserService {
         userRepository.deleteById(id);
 
     }
+    public void updateUserEnabledStatus(Long id , boolean enabled){
+        userRepository.updateEnableStatus(id,enabled);
+    }
+
 }

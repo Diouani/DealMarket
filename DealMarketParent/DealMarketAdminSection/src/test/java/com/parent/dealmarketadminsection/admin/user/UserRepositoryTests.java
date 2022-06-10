@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.*;
 import org.springframework.boot.test.autoconfigure.orm.jpa.*;
 import org.springframework.test.annotation.*;
 
-import java.util.*;
+
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -29,7 +29,7 @@ public class UserRepositoryTests {
     @Test
     void testCreateUserWithOneRole() {
 
-        Role roleAdmin = entityManager.find(Role.class, 3);
+        Role roleAdmin = entityManager.find(Role.class, 3L);
         User userYoussef = new User("diouani.youssef@gmail.com", "youssef123", "Youssef", "Diouani");
         userYoussef.addRole(roleAdmin);
 
@@ -101,6 +101,25 @@ public class UserRepositoryTests {
      User user =   userRepository.getUserByEmail(email);
         assertThat(user).isNotNull();
 
+
+    }
+
+    @Test
+    void testCountById(){
+        Long id = 1L;
+        Long countById = userRepository.countById(id);
+        assertThat(countById).isNotNull().isGreaterThan(0);
+    }
+    @Test
+    void testDisableUser(){
+        Long id = 1L;
+        userRepository.updateEnableStatus(id,false);
+    }
+
+    @Test
+    void testEnableUser(){
+        Long id = 1L;
+        userRepository.updateEnableStatus(id,true);
 
     }
 

@@ -15,4 +15,8 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
     Long countById(Long id);
 
+    @Query("update User u SET u.enabled = ?2 WHERE u.id = ?1")
+    @Modifying
+    void updateEnableStatus(Long id , boolean enabled);
+
 }
