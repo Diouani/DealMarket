@@ -2,7 +2,8 @@ package com.parent.dealmarketadminsection.user;
 
 
 import com.parent.dealmarketadminsection.exeptions.*;
-import com.root.dealmarketshared.entity.*;
+import com.root.dealmarketshared.entity.test.Role;
+import com.root.dealmarketshared.entity.test.User;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
@@ -74,7 +75,7 @@ public class UserController {
 
 
 
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id,
                              Model model,
                              RedirectAttributes redirectAttributes) {
@@ -96,7 +97,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/users/{id}/enabled/{status}")
+    @GetMapping("/{id}/enabled/{status}")
     public String updateUserEnabledStatus(@PathVariable("id") Long id,
                                           @PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
 
@@ -111,8 +112,10 @@ public class UserController {
 
 
         if(message.contains("enabled")) {
+            System.out.println("hello");
             redirectAttributes.addFlashAttribute("messageSuccess", message);
         }else {
+            System.out.println("hello2");
             redirectAttributes.addFlashAttribute("messageError", message);
         }
 

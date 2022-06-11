@@ -1,0 +1,24 @@
+server:
+  port: 8092
+  servlet:
+    context-path: /DealMarketUser
+
+spring:
+  data:
+    rest:
+      base-path: /api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dealmarket
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.format_sql: true
+
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+

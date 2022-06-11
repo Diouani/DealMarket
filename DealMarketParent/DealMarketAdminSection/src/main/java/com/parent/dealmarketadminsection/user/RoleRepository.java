@@ -1,7 +1,7 @@
 package com.parent.dealmarketadminsection.user;
 
 
-import com.root.dealmarketshared.entity.Role;
+import com.root.dealmarketshared.entity.test.Role;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

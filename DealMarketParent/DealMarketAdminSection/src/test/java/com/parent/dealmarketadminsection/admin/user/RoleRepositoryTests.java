@@ -2,8 +2,10 @@ package com.parent.dealmarketadminsection.admin.user;
 
 
 import com.parent.dealmarketadminsection.user.*;
-import com.root.dealmarketshared.entity.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
+import com.root.dealmarketshared.entity.test.Role;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.jdbc.*;

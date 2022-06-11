@@ -1,4 +1,4 @@
-package com.root.dealmarketshared.entity;
+package com.root.dealmarketshared.entity.test;
 
 
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.parent.dealmarketadminsection.user;
 
-import com.root.dealmarketshared.entity.*;
+import com.root.dealmarketshared.entity.test.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.*;
 import org.springframework.data.repository.query.*;
