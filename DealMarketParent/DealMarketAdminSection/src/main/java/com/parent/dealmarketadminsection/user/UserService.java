@@ -1,8 +1,8 @@
 package com.parent.dealmarketadminsection.user;
 
 import com.parent.dealmarketadminsection.exeptions.*;
-import com.root.dealmarketshared.entity.test.Role;
-import com.root.dealmarketshared.entity.test.User;
+import com.root.dealmarketshared.test.Role;
+import com.root.dealmarketshared.test.User;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;

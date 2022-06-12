@@ -5,7 +5,7 @@ import com.parent.dealmarketadminsection.user.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.root.dealmarketshared.entity.test.Role;
+import com.root.dealmarketshared.test.Role;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.jdbc.*;

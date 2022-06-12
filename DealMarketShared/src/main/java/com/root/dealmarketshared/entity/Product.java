@@ -34,7 +34,7 @@ public class Product {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
     @Column(name = "image_url")
-    private String imageUl;
+    private String imageUrl;
     @Column(name = "status")
     private Boolean status;
     @Column(name = "units_in_stock")
