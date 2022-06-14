@@ -10,6 +10,9 @@ import { ProductCategory } from '../common/product-category';
   providedIn: 'root'
 })
 export class ProductService {
+  searchProduct(theKeyword: string) {
+    throw new Error('Method not implemented.');
+  }
 
 
 
