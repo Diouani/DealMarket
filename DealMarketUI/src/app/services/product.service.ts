@@ -10,9 +10,8 @@ import { ProductCategory } from '../common/product-category';
   providedIn: 'root'
 })
 export class ProductService {
-  searchProduct(theKeyword: string) {
-    throw new Error('Method not implemented.');
-  }
+ 
+
 
 
 
@@ -25,9 +24,24 @@ export class ProductService {
 
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
-      map(response => response._embedded.products)
-    )
+    return this.getProducts(searchUrl)
+  }
+
+  getProduct(theProductId: number) {
+     
+      const productUrl = `${this.baseUrl}/${theProductId}`;
+
+      return this.httpClient.get<Product>(productUrl);
+  }
+
+
+
+  searchProducts(theKeyword: string): Observable<Product[]> {
+
+    // need to build URL based on the keyword 
+    const searchUrl = `${this.baseUrl}/search/findByNameContainingIgnoreCase?name=${theKeyword}`;
+
+    return this.getProducts(searchUrl);
   }
 
 
@@ -39,6 +53,15 @@ export class ProductService {
       
     );
   }
+
+
+  //HELPER
+  private getProducts(searchUrl: string): Observable<Product[]> {
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
+      map(response => response._embedded.products)
+    );
+  }
+
 
 
 

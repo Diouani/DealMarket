@@ -65,7 +65,7 @@ export class ProductListComponent implements OnInit {
     const theKeyword : string = this.route.snapshot.paramMap.get('keyword')!;
 
  
-    this.productService.searchProduct(theKeyword).subscribe(
+    this.productService.searchProducts(theKeyword).subscribe(
       data => {
         this.products = data;
       }
