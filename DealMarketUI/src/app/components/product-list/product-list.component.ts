@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/common/product';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { CartItem } from 'src/app/common/cart-item';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -23,6 +25,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) {}
 
@@ -90,7 +93,6 @@ export class ProductListComponent implements OnInit {
 
     console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
 
-   
     this.productService
       .searchProductsPaginate(
         this.thePageNumber - 1,
@@ -103,5 +105,13 @@ export class ProductListComponent implements OnInit {
         this.thePageSize = data.page.size;
         this.theTotalElements = data.page.totalElements;
       });
+  }
+
+  addToCart(theProduct: Product) {
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+
+    const theCartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(theCartItem);
   }
 }
