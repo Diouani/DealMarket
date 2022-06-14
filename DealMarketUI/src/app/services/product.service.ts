@@ -11,15 +11,26 @@ import { map } from 'rxjs/operators';
 export class ProductService {
 
 
+
   private baseUrl = "http://localhost:8090/DealMarketUser/api/products"
   constructor(private httpClient : HttpClient) { }
 
 
-  getProductList() : Observable<Product[]> {
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+  getProductList(theCategoryId : number) : Observable<Product[]> {
+
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
+
+    return this.httpClient.get<GetResponse>(searchUrl).pipe(
       map(response => response._embedded.products)
     )
   }
+
+  getProductCategories() {
+    throw new Error('Method not implemented.');
+  }
+
+
+
 }
 
 
