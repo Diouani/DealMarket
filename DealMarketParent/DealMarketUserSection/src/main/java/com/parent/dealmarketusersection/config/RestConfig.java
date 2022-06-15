@@ -1,7 +1,9 @@
 package com.parent.dealmarketusersection.config;
 
+import com.root.dealmarketshared.entity.Country;
 import com.root.dealmarketshared.entity.Product;
 import com.root.dealmarketshared.entity.ProductCategory;
+import com.root.dealmarketshared.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -33,21 +35,25 @@ public class RestConfig  implements RepositoryRestConfigurer {
 
 
         // gestion des exposition de la classe produit
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
+        disableHttpMethods(Product.class ,config, unsupportedActions);
 
         // gestion des exposition de la classe produitcategory
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
+        disableHttpMethods(ProductCategory.class ,config, unsupportedActions);
 
+        disableHttpMethods(Country.class ,config, unsupportedActions);
+
+        disableHttpMethods(State.class ,config, unsupportedActions);
 
         exposeIds(config);
 
 
+    }
+
+    private void disableHttpMethods(Class theclass ,RepositoryRestConfiguration config, HttpMethod[] unsupportedActions) {
+        config.getExposureConfiguration()
+                .forDomainType(theclass)
+                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
+                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
     }
 
     private void exposeIds(RepositoryRestConfiguration config) {
