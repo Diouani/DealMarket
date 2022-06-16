@@ -1,4 +1,4 @@
-package com.parent.dealmarketusersection.products.repository;
+package com.parent.dealmarketusersection.repository;
 
 import com.root.dealmarketshared.entity.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;

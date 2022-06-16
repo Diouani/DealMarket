@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
 @CrossOrigin("")
-@EntityScan({"com.root.dealmarketshared.entity" , "com.parent.dealmarketusersection"})
+@EntityScan({"com.root.dealmarketshared.entity" ,"com.root.dealmarketshared.dto", "com.parent.dealmarketusersection"})
 
 public class DealMarketUserSectionApplication {
 

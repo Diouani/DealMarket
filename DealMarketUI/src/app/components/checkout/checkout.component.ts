@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -27,10 +28,12 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
   constructor(
     private formBuilder: FormBuilder,
+    private cartService: CartService,
     private formService: FormService
   ) {}
 
   ngOnInit(): void {
+    this.reviewCartDetails();
     const theEmail = JSON.parse(this.storage.getItem('userEmail')!);
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -128,8 +131,19 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  reviewCartDetails() {
+    // subscribe to cartService.totalQuantity
+    this.cartService.totalQuantity.subscribe(
+      (totalQuantity) => (this.totalQuantity = totalQuantity)
+    );
 
-  //Getters 
+    // subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      (totalPrice) => (this.totalPrice = totalPrice)
+    );
+  }
+
+  //Getters
   get firstName() {
     return this.checkoutFormGroup.get('customer.firstName');
   }
@@ -202,9 +216,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit() {
-    
-
-    
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
       return;

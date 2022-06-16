@@ -7,7 +7,7 @@ export class FormValidator {
       // invalid, return error object
       return { notOnlyWhitespace: true };
     } else {
-      return { notOnlyWhitespace: false };
+      return null;
     }
   }
 }
